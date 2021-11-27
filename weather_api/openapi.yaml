@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Code/Name translation Example
+  description: Get translations for a given field and code/name.
+tags:
+- name: code_translation
+paths:
+  /translation:
+    get:
+      operationId: app.get_info
+      tags:
+      - code_translation
+      description: Return a json of code/name translation
+      parameters:
+        - $ref: '#/components/parameters/attribute'
+        - $ref: '#/components/parameters/value'
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeTranslation'
+        404:
+          description: Not found
+components:
+  schemas:
+    CodeTranslation:
+      type: object
+  parameters:
+    attribute:
+      in: query
+      name: attribute
+      schema:
+        type: string
+    value:
+      in: query
+      name: value
+      schema:
+        type: string
