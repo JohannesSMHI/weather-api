@@ -1,20 +1,19 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: Code/Name translation Example
-  description: Get translations for a given field and code/name.
+  title: Weather data
+  description: Weather data
 tags:
-- name: code_translation
+- name: weather_api
 paths:
-  /translation:
+  /timelog:
     get:
-      operationId: app.get_info
+      operationId: app.get_time_log
       tags:
-      - code_translation
-      description: Return a json of code/name translation
+      - timelog
+      description: Return a json list of time tags.
       parameters:
-        - $ref: '#/components/parameters/attribute'
-        - $ref: '#/components/parameters/value'
+        - $ref: '#/components/parameters/recent'
       responses:
         200:
           description: Successful operation
@@ -23,21 +22,216 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CodeTranslation'
+                  $ref: '#/components/schemas/TimeLog'
         404:
           description: Not found
+  /import:
+    patch:
+      operationId: app.import_data
+      tags:
+      - import
+      parameters:
+        - $ref: '#/components/parameters/utmid'
+        - $ref: '#/components/parameters/timestamp'
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/month'
+        - $ref: '#/components/parameters/day'
+        - $ref: '#/components/parameters/hour'
+        - $ref: '#/components/parameters/intemp'
+        - $ref: '#/components/parameters/outtemp'
+        - $ref: '#/components/parameters/outhumi'
+        - $ref: '#/components/parameters/outdew'
+        - $ref: '#/components/parameters/outfeel'
+        - $ref: '#/components/parameters/winsp'
+        - $ref: '#/components/parameters/gust'
+        - $ref: '#/components/parameters/windir'
+        - $ref: '#/components/parameters/presabs'
+        - $ref: '#/components/parameters/presrel'
+        - $ref: '#/components/parameters/rainh'
+        - $ref: '#/components/parameters/raind'
+        - $ref: '#/components/parameters/rainw'
+        - $ref: '#/components/parameters/rainm'
+        - $ref: '#/components/parameters/raint'
+      requestBody:
+        description: Add data
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/DataPost'
+      responses:
+        204:
+          description: Updated
 components:
   schemas:
-    CodeTranslation:
+    TimeLog:
+      type: object
+    DataPost:
       type: object
   parameters:
-    attribute:
+    recent:
       in: query
-      name: attribute
+      name: recent
+      schema:
+        type: boolean
+    utmid:
+      in: query
+      name: utmid
       schema:
         type: string
-    value:
+    timestamp:
       in: query
-      name: value
+      name: timestamp
       schema:
-        type: string
+        type: array
+        items:
+          type: string
+    year:
+      in: query
+      name: year
+      schema:
+        type: array
+        items:
+          type: integer
+    month:
+      in: query
+      name: month
+      schema:
+        type: array
+        items:
+          type: integer
+    day:
+      in: query
+      name: day
+      schema:
+        type: array
+        items:
+          type: integer
+    hour:
+      in: query
+      name: hour
+      schema:
+        type: array
+        items:
+          type: integer
+    intemp:
+      in: query
+      name: intemp
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    outtemp:
+      in: query
+      name: outtemp
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    outhumi:
+      in: query
+      name: outhumi
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    outdew:
+      in: query
+      name: outdew
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    outfeel:
+      in: query
+      name: outfeel
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    winsp:
+      in: query
+      name: winsp
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    gust:
+      in: query
+      name: gust
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    windir:
+      in: query
+      name: windir
+      schema:
+        type: array
+        items:
+          type: integer
+          nullable: true
+    presabs:
+      in: query
+      name: presabs
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    presrel:
+      in: query
+      name: presrel
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    rainh:
+      in: query
+      name: rainh
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    raind:
+      in: query
+      name: raind
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    rainw:
+      in: query
+      name: rainw
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    rainm:
+      in: query
+      name: rainm
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
+    raint:
+      in: query
+      name: raint
+      schema:
+        type: array
+        items:
+          type: number
+          nullable: true
