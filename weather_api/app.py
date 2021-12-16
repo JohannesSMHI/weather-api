@@ -8,7 +8,7 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.append(Path(__file__).parent.absolute().parent)
+sys.path.append(str(Path(__file__).parent.absolute().parent))
 import connexion
 from data_handler import DataHandler
 
