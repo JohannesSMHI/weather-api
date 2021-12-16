@@ -5,6 +5,10 @@ Created on 2021-11-27 09:52
 @author: johannes
 """
 import os
+import sys
+from pathlib import Path
+
+sys.path.append(Path(__file__).parent.absolute().parent)
 import connexion
 from data_handler import DataHandler
 
