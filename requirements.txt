@@ -1,0 +1,3 @@
+connexion
+pyyaml
+pandas
