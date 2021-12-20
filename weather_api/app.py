@@ -6,10 +6,8 @@ Created on 2021-11-27 09:52
 """
 import os
 import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).parent.absolute().parent))
 import connexion
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from data_handler import DataHandler
 
 
@@ -45,4 +43,4 @@ app.add_api(
 )
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run()
