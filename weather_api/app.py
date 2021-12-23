@@ -11,9 +11,16 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from data_handler import DataHandler
 
 
-def get_time_log(*args, recent='no', **kwargs):
+app = connexion.FlaskApp(
+    __name__,
+    specification_dir='../',
+    options={'swagger_url': '/'},
+)
+
+
+def get_time_log(*args, recent=False, **kwargs):
     """GET database time log."""
-    if recent == 'yes':
+    if recent:
         return handler.get_recent_time_log()
     else:
         return handler.get_time_log()
@@ -21,19 +28,12 @@ def get_time_log(*args, recent='no', **kwargs):
 
 def import_data(*args, **kwargs):
     """PUT data to database."""
-    print(kwargs.keys())
     if 'body' in kwargs:
         if kwargs['body'].get('utmid'):
             handler.post(**kwargs['body'])
 
 
 handler = DataHandler()
-
-app = connexion.FlaskApp(
-    __name__,
-    specification_dir='../',
-    options={'swagger_url': '/'},
-)
 
 app.add_api(
     os.path.join(
@@ -43,4 +43,4 @@ app.add_api(
 )
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='127.0.0.1', port=8080)
