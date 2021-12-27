@@ -7,6 +7,7 @@ Created on 2021-11-27 09:52
 import os
 import sys
 import connexion
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from data_handler import DataHandler
 
@@ -43,4 +44,4 @@ app.add_api(
 )
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=8080)
+    app.run()

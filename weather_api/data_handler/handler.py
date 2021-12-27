@@ -5,10 +5,10 @@ Created on 2021-11-27 09:52
 @author: johannes
 """
 import os
+from pathlib import Path
 import yaml
 import sqlite3
 import pandas as pd
-from weather_api import get_base_folder
 
 
 def get_db_conn():
@@ -20,8 +20,8 @@ class DataHandler:
     """Doc."""
 
     def __init__(self):
-        base = get_base_folder()
-        with open(os.path.join(base, 'resources/parameters.yaml')) as fd:
+        base = Path(__file__).parent.parent
+        with open(base.joinpath('resources/parameters.yaml').resolve()) as fd:
             data = yaml.load(fd, Loader=yaml.FullLoader)
         self.db_fields = set(data.get('db_fields'))
 
