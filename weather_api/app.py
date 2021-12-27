@@ -28,13 +28,13 @@ def get_time_log(*args, recent=False, **kwargs):
 
 
 def import_data(*args, **kwargs):
-    """PUT data to database."""
+    """PATCH data to database."""
     if 'body' in kwargs:
         if kwargs['body'].get('utmid'):
             handler.post(**kwargs['body'])
 
 
-handler = DataHandler()
+handler = DataHandler(time_zone='Europe/Stockholm')
 
 app.add_api(
     os.path.join(

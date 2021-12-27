@@ -19,7 +19,8 @@ def get_db_conn():
 class DataHandler:
     """Doc."""
 
-    def __init__(self):
+    def __init__(self, time_zone=None):
+        self.time_zone = time_zone
         base = Path(__file__).parent.parent
         with open(base.joinpath('resources/parameters.yaml').resolve()) as fd:
             data = yaml.load(fd, Loader=yaml.FullLoader)
@@ -31,7 +32,7 @@ class DataHandler:
         df = pd.DataFrame(
             {field: item for field, item in kwargs.items() if field in self.db_fields}
         )
-        print(df)
+        # print(df)
         conn = get_db_conn()
         df.to_sql('weather', conn, if_exists='append', index=False)
 
@@ -60,7 +61,7 @@ class DataHandler:
     @property
     def today(self):
         """Return pandas TimeStamp for today."""
-        return pd.Timestamp.today()
+        return pd.Timestamp.today(tz=self.time_zone)
 
     @property
     def date_today(self):
